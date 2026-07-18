@@ -5,7 +5,69 @@
 
 
 
-<head>
+<head><!-- hexo injector head_begin start -->
+<script>
+  (function() {
+    var localBanners = [
+      "/img/random/abyss1.webp",
+      "/img/random/abyss2.webp",
+      "/img/random/abyss3.webp",
+      "/img/random/frieren1.webp",
+      "/img/random/frieren2.webp",
+      "/img/random/frieren3.webp",
+      "/img/random/frieren4.webp",
+      "/img/random/frieren5.webp",
+      "/img/random/maomao1.webp",
+      "/img/random/maomao2.webp",
+      "/img/random/maomao3.webp",
+      "/img/random/roxy1.webp",
+      "/img/random/roxy2.webp",
+      "/img/random/roxy3.webp",
+      "/img/random/sound-euphonium1.webp",
+      "/img/random/sound-euphonium2.webp",
+      "/img/random/sound-euphonium3.webp",
+      "/img/random/tea-party1.webp",
+      "/img/random/tea-party2.webp"
+    ];
+
+    function setRandomBanner() {
+      var path = window.location.pathname;
+      
+      // 建立白名单路由：匹配首页(含底部分页)、归档页、分类页、标签页、关于页
+      var isTargetPage = path === '/' || 
+                         path === '/index.html' ||
+                         path.indexOf('/page/') === 0 ||
+                         path.indexOf('/archives') === 0 || 
+                         path.indexOf('/categories') === 0 || 
+                         path.indexOf('/tags') === 0 || 
+                         path.indexOf('/about') === 0;
+
+      // 如果不是上述公共导航页面（即用户进入了具体的某篇文章），则退出函数，保留文章专属 Cover
+      if (!isTargetPage) return;
+
+      var randomIndex = Math.floor(Math.random() * localBanners.length);
+      var noCacheUrl = localBanners[randomIndex] + "?t=" + new Date().getTime();
+      
+      var banner = document.getElementById("banner");
+      if (banner) {
+        banner.style.setProperty('background-image', 'url(' + noCacheUrl + ')', 'important');
+      } else {
+        var style = document.createElement('style');
+        style.innerHTML = '#banner { background-image: url(' + noCacheUrl + ') !important; }';
+        document.head.appendChild(style);
+      }
+    }
+
+    // 初始化执行
+    setRandomBanner();
+
+    // 监听 Pjax 页面跳转执行
+    window.addEventListener('pjax:complete', function() {
+      setRandomBanner();
+    });
+  })();
+</script>
+<!-- hexo injector head_begin end -->
   <meta charset="UTF-8">
 
   <link rel="apple-touch-icon" sizes="76x76" href="/img/squid.jpg">
@@ -286,7 +348,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://www.dmoe.cc/random.php') no-repeat center center; background-size: cover;">
+     style="background: url('/img/random/tea-party1.webp') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -736,39 +798,6 @@
               <a href="/tags/%E7%8F%AD%E5%A4%9A%E9%92%AE/">#班多钮</a>
             
           </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/07/15/hello-world/" target="_self">
-          Hello World
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/07/15/hello-world/" target="_self">
-        <div>
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. what
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-07-15 15:43" pubdate>
-              2026-07-15
-            </time>
-          </div>
-        
-        
         
       </div>
     </article>
