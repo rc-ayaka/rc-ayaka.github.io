@@ -615,6 +615,12 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2026/07/22/new_to_acc/" title="“手风琴入门指北”">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">“手风琴入门指北”</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
@@ -631,6 +637,38 @@
             </div>
 
             
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="waline"></div>
+  <script type="module">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/3.6.0/waline.css')
+      import('https://lib.baomitu.com/waline/3.6.0/waline.js').then(({ init }) => {
+        var options = Object.assign(
+          {"serverURL":"https://cosmic-praline-c718e3.netlify.app/.netlify/functions/comment","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
           </article>
         </div>
       </div>
