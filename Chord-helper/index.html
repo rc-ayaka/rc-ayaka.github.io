@@ -89,7 +89,7 @@
 <meta property="og:description" content=".accordion-pro {     font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, sans-serif;     background: #18191a;     padding: 24px;     border-radius: 12px;     color: #e4e6eb;     wi">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-09-18T11:28:24.000Z">
-<meta property="article:modified_time" content="2026-09-18T15:59:00.732Z">
+<meta property="article:modified_time" content="2026-09-19T14:46:51.753Z">
 <meta property="article:author" content="Æsir">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -440,8 +440,8 @@
 
   /* ===== 顶部：两种输入方式左右分开 ===== */
   .header-tools {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    flex-wrap: wrap; gap: 16px; margin-bottom: 16px;
+    display: grid; grid-template-columns: minmax(240px, 340px) minmax(0, 1fr);
+    align-items: start; gap: 20px; margin-bottom: 16px;
   }
 
   .search-area { flex-grow: 1; max-width: 340px; }
@@ -455,7 +455,33 @@
   .search-area input:disabled { opacity: 0.45; }
   .field-hint { font-size: 11px; color: #7a7f85; margin-top: 6px; }
 
-  .mode-col { display: flex; flex-direction: column; align-items: flex-end; }
+  .mode-col { display: flex; flex-direction: column; align-items: stretch; min-width: 0; }
+
+  .quality-filters {
+    display: grid; grid-template-columns: repeat(3, minmax(150px, 1fr));
+    gap: 8px; width: 100%; max-height: 184px; overflow-y: auto;
+    padding: 2px 3px 5px 2px; scrollbar-color: #555 #242526; scrollbar-width: thin;
+  }
+  .quality-filter-group {
+    min-width: 0; padding: 8px; border: 1px solid #3a3b3c; border-radius: 8px;
+    background: rgba(24,25,26,.58);
+  }
+  .quality-group-title { display:flex; align-items:center; justify-content:space-between; gap:6px; color: #d8dbe0; font-size: 11px; font-weight: 800; margin-bottom: 6px; }
+  .quality-group-actions { display:flex; gap:3px; }
+  .quality-group-actions button { border:0; padding:2px 4px; border-radius:4px; background:#3a3b3c; color:#aeb4bb; font-size:10px; cursor:pointer; }
+  .quality-group-actions button:hover, .quality-group-actions button:focus-visible { background:#845ef7; color:#fff; outline:none; }
+  .quality-options { display: flex; flex-wrap: wrap; gap: 5px; }
+  .quality-filter { cursor: pointer; }
+  .quality-filter input { position: absolute; opacity: 0; pointer-events: none; }
+  .quality-filter span {
+    display: inline-block; padding: 5px 7px; border-radius: 6px;
+    background: #2f3031; border: 1px solid #4e4f50; color: #aeb4bb;
+    font-size: 11px; font-weight: 700; transition: all 0.15s; white-space: nowrap;
+  }
+  .quality-filter input:checked + span { color: #fff; border-color: #b197fc; background: rgba(132,94,247,.28); }
+  @media (max-width: 760px) {
+    .quality-filters { grid-template-columns: 1fr; max-height: 250px; }
+  }
 
   /* 2/3/4指 模式切换器 */
   .mode-switch {
@@ -554,27 +580,45 @@
   /* 正向求解高亮 */
   .bass-btn.highlight-root { background: #e8590c; border-color: #fd7e14; box-shadow: 0 3px #d9480f; color: #fff; }
   .bass-btn.highlight-chord { background: #339af0; border-color: #4dabf7; box-shadow: 0 3px #228be6; color: #fff; }
+  .bass-btn.candidate-low { border-color: #8b6f35; background: rgba(255, 212, 59, .15); }
+  .bass-btn.candidate-mid { border-color: #d6a62a; background: rgba(255, 212, 59, .32); color: #fff; }
+  .bass-btn.candidate-high { border-color: #ffd43b; background: #9a7411; box-shadow: 0 3px #6e5008; color: #fff; }
+  .bass-btn.preview-root { background: #e8590c; border-color: #fd7e14; box-shadow: 0 3px #d9480f; color: #fff; }
+  .bass-btn.preview-chord { background: #845ef7; border-color: #b197fc; box-shadow: 0 3px #6741d9; color: #fff; }
+
+  .chord-card { margin-top: 7px; padding: 8px 10px; border: 1px solid #3a3b3c; border-left: 4px solid #868e96; border-radius: 6px; cursor: default; }
+  .chord-card:hover { background: #2f3031; border-color: #845ef7; }
+  .chord-card.basic { border-left-color: #4dabf7; }
+  .chord-card.seventh { border-left-color: #69db7c; }
+  .chord-card.extended { border-left-color: #ffa94d; }
+  .quality-badge { font-size: 10px; border-radius: 4px; padding: 2px 5px; color: #101113; background: #ced4da; font-weight: 800; margin-left: 6px; }
+  .chord-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-items: start; }
+  .chord-card-grid .chord-card { margin-top: 0; min-width: 0; }
+  @media (max-width: 760px) {
+    .header-tools { grid-template-columns: 1fr; gap: 12px; }
+    .mode-col { align-items: stretch; }
+    .chord-card-grid { grid-template-columns: 1fr; }
+  }
+  @media (min-width: 761px) and (max-width: 1120px) {
+    .chord-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
 </style>
 
 <div class="accordion-pro">
   <div class="legend-box">
-    <b>① 输入框查和弦：</b>上方搜索框打字，例如 <code>C</code>(大三) | <code>Cm</code>(小三) | <code>C7</code>(属七) | <code>Cd</code>(减七/m6) | <code>CM7</code>(大七) | <code>Cm7</code>(小七) | <code>Csus4</code> | <code>C9</code><br>
-    <b>② 点键盘反查和弦：</b>下方键盘直接点一个或多个键，自动反推它是什么和弦（含最接近的近似和弦）。
+    <b>① 输入框查和弦：</b>输入如 <code>C</code>、<code>Cm7</code>、<code>CM7</code>、<code>C7#9</code> 或 <code>C13</code>，查看最多四键的可行组合。<br>
+    <b>② 点键盘反查：</b>点一个或多个低音/和弦键；上方列出候选，鼠标悬停候选即可预览推荐按键。右侧可逐项筛选和弦质量；只按低音时，键盘会提示最常用的下一颗和弦键。
   </div>
 
   <div class="header-tools">
     <div class="search-area">
-      <input type="text" id="chord-input" placeholder="输入和弦 (如 Ab7, CM7, F9)">
+    <input type="text" id="chord-input" placeholder="输入和弦 (如 Ab7, CM7, C/E, Bb7/F)">
       <div class="field-hint">输入框有内容时 = 正向求解；清空后 = 键盘反向求解</div>
     </div>
 
     <div class="mode-col">
-      <div class="mode-switch" id="mode-switch">
-        <label><input type="radio" name="fingers" value="2" checked><span>2指(基础)</span></label>
-        <label><input type="radio" name="fingers" value="3"><span>3指(丰满)</span></label>
-        <label><input type="radio" name="fingers" value="4"><span>4指(极致)</span></label>
-      </div>
-      <div class="mode-note" id="mode-note"></div>
+      <div class="quality-filters" id="quality-filters" aria-label="反查和弦质量"></div>
+      <div class="mode-note" id="mode-note">筛选影响低音提示与反查候选</div>
     </div>
   </div>
 
@@ -583,7 +627,8 @@
   <div id="bass-grid" class="bass-grid"></div>
 </div>
 
-<script>
+<!-- 旧版固定指法表保留为历史参考；下方脚本使用动态音集检索。 -->
+<script type="text/plain" id="legacy-chord-helper">
   // 核心20列（五度圈，从 Fb 到 E#）
   const COF = ['Fb','Cb','Gb','Db','Ab','Eb','Bb','F','C','G','D','A','E','B','F#','C#','G#','D#','A#','E#'];
 
@@ -1004,6 +1049,249 @@
   chordInput.addEventListener('input', onInputChange);
   initGrid();
   renderReverseIntro(); // 初始即反向求解模式（输入框为空）
+</script>
+
+<script>
+  /* 标准 120 Bass Stradella：动态按键组合与实际发声音集 */
+  const COF = ['Fb','Cb','Gb','Db','Ab','Eb','Bb','F','C','G','D','A','E','B','F#','C#','G#','D#','A#','E#'];
+  const PITCH = {
+    C:0,'B#':0,Dbb:0,'C#':1,Db:1,D:2,Cx:2,Ebb:2,'D#':3,Eb:3,E:4,Fb:4,Dx:4,'E#':5,F:5,'F#':6,Gb:6,G:7,Fx:7,Abb:7,'G#':8,Ab:8,A:9,Gx:9,Bbb:9,'A#':10,Bb:10,B:11,Cb:11,Ax:11
+  };
+  const pitch = note => PITCH[note] ?? -1;
+  const pcs = notes => [...new Set(notes.map(pitch).filter(p => p >= 0))].sort((a,b) => a-b);
+  const samePCs = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
+  const getNote = i => {
+    if(i >= 0 && i < COF.length) return COF[i];
+    const right = ['B#','Fx','Cx','Gx','Dx','Ax'];
+    const left = ['Bbb','Ebb','Abb','Dbb'];
+    return i >= COF.length ? (right[i - COF.length] || '?') : (left[left.length + i] || '?');
+  };
+  const inBounds = i => i >= 0 && i < COF.length;
+
+  const rowConfig = [
+    { id: 'counter', name: 'M3 对位' }, { id: 'fundamental', name: '基本低音' },
+    { id: 'major', name: '大三(M)' }, { id: 'minor', name: '小三(m)' },
+    { id: 'dom7', name: '属七(7)' }, { id: 'dim7', name: '减七(d)' }
+  ];
+  const ROW_SHORT = { counter:'对位低音', fundamental:'基本低音', major:'大三', minor:'小三', dom7:'属七', dim7:'减七' };
+  const pitchName = p => ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'][(p+120)%12];
+  const reedsFor = (row, col) => {
+    const root = pitch(getNote(col));
+    if(row === 'fundamental') return [pitchName(root)];
+    if(row === 'counter') return [pitchName(root + 4)];
+    if(row === 'major') return [pitchName(root), pitchName(root + 4), pitchName(root + 7)];
+    if(row === 'minor') return [pitchName(root), pitchName(root + 3), pitchName(root + 7)];
+    if(row === 'dom7') return [pitchName(root), pitchName(root + 4), pitchName(root + 10)]; // 省略五音
+    return [pitchName(root), pitchName(root + 3), pitchName(root + 9)]; // 省略减五音
+  };
+  const keyLabel = k => `${ROW_SHORT[k.row]} ${k.row === 'counter' ? getNote(k.col + 4) : getNote(k.col)}`;
+  const keyId = k => `${k.row}:${k.col}`;
+  const allKeys = rowConfig.flatMap(r => COF.map((_, col) => ({ row:r.id, col })));
+
+  // expected: 完整理论音；required: 命名不可省略的音。五音可省略，以适配 Stradella 七/减七簧片。
+  const Q = [
+    ['M','大三和弦','basic','', [0,4,7], [0,4]],
+    ['m','小三和弦','basic','m', [0,3,7], [0,3]],
+    ['dim','减三和弦','basic','dim', [0,3,6], [0,3,6]],
+    ['6','六和弦','basic','6', [0,4,7,9], [0,4,9]],
+    ['m6','小六和弦','basic','m6', [0,3,7,9], [0,3,9]],
+    ['7','属七和弦','seventh','7', [0,4,7,10], [0,4,10]],
+    ['maj7','大七和弦','seventh','M7', [0,4,7,11], [0,4,11]],
+    ['m7','小七和弦','seventh','m7', [0,3,7,10], [0,3,10]],
+    ['m7b5','半减七和弦','seventh','m7b5', [0,3,6,10], [0,3,6,10]],
+    ['dim7','减七和弦','seventh','dim7', [0,3,6,9], [0,3,6,9]],
+    ['9','属九和弦','extended','9', [0,2,4,7,10], [0,2,4,10]],
+    ['maj9','大九和弦','extended','M9', [0,2,4,7,11], [0,2,4,11]],
+    ['m9','小九和弦','extended','m9', [0,2,3,7,10], [0,2,3,10]],
+    ['11','属十一和弦','extended','11', [0,2,5,7,10], [0,2,5,10]],
+    ['13','属十三和弦','extended','13', [0,2,4,7,9,10], [0,2,4,9,10]],
+    ['7b9','属七降九','extended','7b9', [0,1,4,7,10], [0,1,4,10]],
+    ['7#9','属七升九','extended','7#9', [0,3,4,7,10], [0,3,4,10]],
+    ['7#11','属七升十一','extended','7#11', [0,2,4,6,7,10], [0,2,4,6,10]],
+  ].map(([id,name,group,suffix,tones,required]) => ({id,name,group,suffix,tones,required}));
+  const byId = Object.fromEntries(Q.map(q => [q.id, q]));
+  const GROUP_LABEL = { basic:'基础', seventh:'七和弦', extended:'延伸/变化' };
+  const aliases = {
+    '':'M',maj:'M',major:'M',m:'m',min:'m','-':'m',dim:'dim',o:'dim','6':'6',m6:'m6',
+    '7':'7',maj7:'maj7',m7:'m7',min7:'m7',m7b5:'m7b5','m7(b5)':'m7b5',dim7:'dim7',d7:'dim7',
+    '9':'9',maj9:'maj9',m9:'m9','11':'11','13':'13','7b9':'7b9','7#9':'7#9','7#11':'7#11','7b13':'7b13'
+  };
+  const canonicalRoots = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+
+  const grid = document.getElementById('bass-grid');
+  const input = document.getElementById('chord-input');
+  const fPanel = document.getElementById('forward-panel');
+  const rPanel = document.getElementById('reverse-panel');
+  const note = document.getElementById('mode-note');
+  const selected = new Set();
+  const activeQualities = () => [...document.querySelectorAll('#quality-filters input:checked')].map(x => x.value);
+  const allowed = () => Q.filter(q => activeQualities().includes(q.id));
+  function initQualityFilters() {
+    const box=document.getElementById('quality-filters');
+    const groups=['basic','seventh','extended'];
+    box.innerHTML=groups.map(group => `<section class="quality-filter-group" data-quality-group="${group}">
+      <div class="quality-group-title"><span>${GROUP_LABEL[group]}</span><span class="quality-group-actions"><button type="button" data-group-action="all">全选</button><button type="button" data-group-action="none">清空</button></span></div>
+      <div class="quality-options">${Q.filter(q => q.group===group).map(q => `<label class="quality-filter"><input type="checkbox" value="${q.id}" checked><span>${q.suffix || 'M'} · ${q.name}</span></label>`).join('')}</div>
+    </section>`).join('');
+    box.querySelectorAll('input').forEach(x => x.addEventListener('change', () => { input.value.trim() ? renderForward(input.value) : renderReverse(); }));
+    box.querySelectorAll('[data-group-action]').forEach(button => button.addEventListener('click', () => {
+      const group=button.closest('.quality-filter-group');
+      group.querySelectorAll('input').forEach(x => { x.checked=button.dataset.groupAction === 'all'; });
+      input.value.trim() ? renderForward(input.value) : renderReverse();
+    }));
+  }
+  const htmlNotes = (values, cls='') => values.map(v => `<span class="chip ${cls}">${v}</span>`).join('');
+  const htmlKeys = values => values.map(k => `<span class="key-tag ${k.row === 'fundamental' || k.row === 'counter' ? 'root' : ''}">${keyLabel(k)}</span>`).join('');
+  const showForward = () => { fPanel.style.display='block'; rPanel.style.display='none'; };
+  const showReverse = () => { rPanel.style.display='block'; fPanel.style.display='none'; };
+
+  function initGrid() {
+    rowConfig.forEach(row => {
+      const line = document.createElement('div'); line.className='bass-row'; line.dataset.row=row.id;
+      const label = document.createElement('div'); label.className='row-label'; label.textContent=row.name; line.appendChild(label);
+      const buttons = document.createElement('div'); buttons.className='row-btns';
+      COF.forEach((n, col) => {
+        const b=document.createElement('div'); b.className='bass-btn'; b.dataset.row=row.id; b.dataset.col=col;
+        if(row.id === 'fundamental' && ['C','E','Ab'].includes(n)) b.classList.add('marked');
+        b.textContent = row.id==='counter' ? getNote(col+4) : n + ({major:'M',minor:'m',dom7:'7',dim7:'d'}[row.id] || '');
+        b.addEventListener('click', () => toggleKey({row:row.id,col})); buttons.appendChild(b);
+      });
+      line.appendChild(buttons); grid.appendChild(line);
+    });
+  }
+  const buttonFor = k => document.querySelector(`.bass-btn[data-row="${k.row}"][data-col="${k.col}"]`);
+  function clearBoard(keepSelected=true) {
+    document.querySelectorAll('.bass-btn').forEach(b => b.classList.remove('selected','candidate-low','candidate-mid','candidate-high','preview-root','preview-chord'));
+    if(keepSelected) [...selected].map(parseKey).forEach(k => buttonFor(k)?.classList.add('selected'));
+  }
+  const parseKey = id => { const [row,col] = id.split(':'); return {row,col:+col}; };
+  const selectedKeys = () => [...selected].map(parseKey);
+  const sounding = keys => pcs(keys.flatMap(k => reedsFor(k.row,k.col)));
+  const rootName = p => canonicalRoots[p];
+  const intervalsFor = (root, q) => q.tones.map(i => (root+i)%12).sort((a,b)=>a-b);
+  const requiredFor = (root, q) => q.required.map(i => (root+i)%12);
+
+  function matches(actual, root, q) {
+    const expected=intervalsFor(root,q), required=requiredFor(root,q);
+    const missing=required.filter(p => !actual.includes(p));
+    const extra=actual.filter(p => !expected.includes(p));
+    const optionalMissing=expected.filter(p => !actual.includes(p) && !required.includes(p));
+    // 可省略音（通常是五音）不应把标准 Stradella 发声判成“不匹配”；仅用于同分排序。
+    return {missing,extra,optionalMissing, score:missing.length*7 + extra.length*5};
+  }
+  function combinations(items, length, start=0, prefix=[], out=[]) {
+    if(prefix.length === length) { out.push(prefix); return out; }
+    for(let i=start; i<=items.length-(length-prefix.length); i++) combinations(items,length,i+1,[...prefix,items[i]],out);
+    return out;
+  }
+  function findRecipes(root, q, bassFilter=null) {
+    const target=intervalsFor(root,q), needed=requiredFor(root,q);
+    const bass=allKeys.filter(k => ['fundamental','counter'].includes(k.row) && sounding([k])[0] === (bassFilter === null ? root : bassFilter));
+    const chord=allKeys.filter(k => !['fundamental','counter'].includes(k.row) && sounding([k]).every(p => target.includes(p)));
+    const recipes=[];
+    bass.forEach(b => {
+      for(let count=0; count<=3; count++) combinations(chord,count).forEach(rest => {
+        const keys=[b,...rest], actual=sounding(keys);
+        if(keys.length > 4 || !needed.every(p => actual.includes(p))) return;
+        if(actual.some(p => !target.includes(p))) return;
+        const optionalMissing=target.filter(p => !actual.includes(p) && !needed.includes(p));
+        const span=Math.max(...keys.map(k=>k.col))-Math.min(...keys.map(k=>k.col));
+        recipes.push({keys,actual,optionalMissing,score:optionalMissing.length*10+keys.length,bassPenalty:b.row==='fundamental'?0:1,span});
+      });
+    });
+    const unique=new Map();
+    recipes.forEach(r => { const id=r.keys.map(keyId).sort().join('|'); if(!unique.has(id)) unique.set(id,r); });
+    return [...unique.values()].sort((a,b) => a.score-b.score || a.bassPenalty-b.bassPenalty || a.span-b.span || a.keys.length-b.keys.length).slice(0,6);
+  }
+  function card(root, q, match, recipe, prefix='', bass=null, hint='') {
+    const chord=`${rootName(root)}${q.suffix}${bass !== null && bass !== root ? `/${rootName(bass)}` : ''}`;
+    const status = hint || (!match.missing.length && !match.extra.length ? '完全匹配' : `缺关键音 ${match.missing.length} · 额外音 ${match.extra.length}`);
+    const attr = recipe ? recipe.keys.map(keyId).join(',') : '';
+    return `<div class="chord-card ${q.group}" data-preview="${attr}">
+      <b>${chord}</b><span class="quality-badge">${GROUP_LABEL[q.group]}</span>
+      <span class="dim"> ${q.name} · ${status}</span>
+      ${recipe ? `<br><span class="dim">悬停预览：${htmlKeys(recipe.keys)}${recipe.optionalMissing.length ? ` · 可省略 ${recipe.optionalMissing.length} 音` : ''}${hint ? ` · ${hint}` : ''}</span>` : ''}
+    </div>`;
+  }
+  function bindPreviews(scope, onLeave) {
+    scope.querySelectorAll('[data-preview]').forEach(el => {
+      const keys=(el.dataset.preview || '').split(',').filter(Boolean).map(parseKey);
+      if(!keys.length) return;
+      el.addEventListener('mouseenter', () => { clearBoard(true); keys.forEach(k => buttonFor(k)?.classList.add(['fundamental','counter'].includes(k.row) ? 'preview-root':'preview-chord')); });
+      el.addEventListener('mouseleave', onLeave);
+    });
+  }
+  function renderForward(raw) {
+    clearBoard(false);
+    const match=raw.trim().match(/^([A-Ga-g])([#b]?)([^/]*?)(?:\/([A-Ga-g])([#b]?))?$/);
+    if(!match) { showForward(); fPanel.innerHTML='<div class="panel-title forward">正向求解 · 输入和弦名</div><div class="warn-pill red">请输入如 C、F#m7、BbM9、C7#9 或 C/E、Bb7/F 的和弦名。</div>'; return; }
+    const rootText=match[1].toUpperCase()+match[2], root=pitch(rootText), suffix=match[3].trim();
+    const bassText=match[4] ? match[4].toUpperCase()+match[5] : '', bass=bassText ? pitch(bassText) : null;
+    const normalized=suffix === 'M7' ? 'maj7' : suffix === 'M9' ? 'maj9' : suffix.toLowerCase();
+    const q=byId[aliases[normalized]];
+    if(root<0 || (bassText && bass<0) || !q) { showForward(); fPanel.innerHTML=`<div class="panel-title forward">正向求解 · 输入和弦名</div><div class="warn-pill red">还不支持「${raw}」的写法。</div>`; return; }
+    const recipes=findRecipes(root,q,bass);
+    const title=`${rootName(root)}${q.suffix}${bass !== null && bass !== root ? `/${rootName(bass)}` : ''}`;
+    showForward();
+    fPanel.innerHTML=`<div class="panel-title forward">正向求解 · ${title}</div>
+      <div class="warn-pill blue">最多四个实体按键；以实际发声音集判断。悬停方案可预览键盘。</div>
+      <div class="row-line"><b>理论音：</b>${htmlNotes(intervalsFor(root,q).map(rootName),'ghost')}</div>
+      ${recipes.length ? `<div class="chord-card-grid">${recipes.map(r => card(root,q,{missing:[],extra:[]},r,'',bass)).join('')}</div>` : '<div class="warn-pill red">在标准 120 Bass、四键以内找不到此和弦的可行组合。</div>'}`;
+    bindPreviews(fPanel, () => clearBoard(true));
+  }
+  function highlightNextChordKeys(keys) {
+    const lows=keys.filter(k => ['fundamental','counter'].includes(k.row));
+    const chords=keys.filter(k => !['fundamental','counter'].includes(k.row));
+    if(lows.length !== 1 || chords.length) return;
+    const root=sounding(lows)[0], weight=new Map();
+    allowed().forEach(q => {
+      const recipe=findRecipes(root,q)[0];
+      if(!recipe) return;
+      const base=q.group==='basic'?5:q.group==='seventh'?3:1;
+      recipe.keys.filter(k => !['fundamental','counter'].includes(k.row)).forEach(k => weight.set(keyId(k),(weight.get(keyId(k))||0)+base));
+    });
+    const values=[...weight.values()], max=Math.max(...values,0);
+    weight.forEach((value,id) => { const b=buttonFor(parseKey(id)); if(!b) return; b.classList.add(value >= max*.72?'candidate-high':value >= max*.38?'candidate-mid':'candidate-low'); });
+  }
+  function renderReverse() {
+    clearBoard(true);
+    const keys=selectedKeys();
+    if(!keys.length) {
+      showReverse(); rPanel.innerHTML='<div class="panel-title reverse">反向求解 · 点选键盘</div><div class="warn-pill purple">先点低音、对位低音或和弦键。仅点一个低音时，会亮起常见的下一颗和弦键。</div>'; return;
+    }
+    const actual=sounding(keys), hasChord=keys.some(k => !['fundamental','counter'].includes(k.row));
+    highlightNextChordKeys(keys);
+    let html='<div class="panel-title reverse">反向求解 · 点选键盘</div>';
+    html+=`<div class="row-line"><b>已按：</b><br>${htmlKeys(keys)}</div><div class="row-line"><b>实际发声：</b>${htmlNotes(actual.map(rootName))}</div>`;
+    if(!hasChord) {
+      const roots=[...new Set(keys.filter(k => ['fundamental','counter'].includes(k.row)).map(k => sounding([k])[0]))];
+      const suggestions=roots.flatMap(root => allowed().map(q => ({root,q,recipe:findRecipes(root,q)[0]})).filter(x => x.recipe).slice(0,5));
+      html+='<div class="warn-pill purple">目前只有低音，以下是以已按低音为锚点的常用补全方向；多个低音会保留为低音线，不强行命名为完整和弦。</div>';
+      if(suggestions.length) html+=`<div class="row-line"><b>可补全：</b><div class="chord-card-grid">${suggestions.map(x => card(x.root,x.q,{missing:[],extra:[]},x.recipe,'',null,'待补全')).join('')}</div></div>`;
+      showReverse(); rPanel.innerHTML=html; bindPreviews(rPanel, renderReverse); return;
+    }
+    const bassKeys=keys.filter(k => ['fundamental','counter'].includes(k.row));
+    const bassRoots=[...new Set(bassKeys.map(k => sounding([k])[0]))];
+    const chordAnchors=[...new Set(keys.filter(k => !['fundamental','counter'].includes(k.row)).map(k => pitch(getNote(k.col))))];
+    const preferredBass=bassRoots.length===1 ? bassRoots[0] : null;
+    const hits=[];
+    canonicalRoots.forEach((_,root) => allowed().forEach(q => {
+      const result=matches(actual,root,q); const recipe=findRecipes(root,q)[0];
+      const anchor = chordAnchors.includes(root) ? 0 : bassRoots.includes(root) ? 1 : result.extra.length===0 && bassRoots.every(b => intervalsFor(root,q).includes(b)) ? 2 : 5;
+      hits.push({root,q,result,recipe,anchor,bass:preferredBass});
+    }));
+    hits.sort((a,b) => a.result.score-b.result.score || a.anchor-b.anchor || a.result.optionalMissing.length-b.result.optionalMissing.length || a.q.tones.length-b.q.tones.length);
+    const exact=hits.filter(h => h.result.score===0).slice(0,8);
+    const near=hits.filter(h => h.result.score>0).slice(0,5);
+    if(exact.length) html+=`<div class="row-line"><b style="color:#69db7c;">完全匹配：</b><div class="chord-card-grid">${exact.map(h => card(h.root,h.q,h.result,h.recipe,'',h.bass)).join('')}</div></div>`;
+    if(near.length) html+=`<div class="row-line"><b style="color:#74c0fc;">同一低音/和弦锚点下的可能：</b><div class="chord-card-grid">${near.map(h => card(h.root,h.q,h.result,h.recipe,'',h.bass)).join('')}</div></div>`;
+    showReverse(); rPanel.innerHTML=html; bindPreviews(rPanel, renderReverse);
+  }
+  function toggleKey(key) {
+    input.value=''; const id=keyId(key); selected.has(id) ? selected.delete(id) : selected.add(id); renderReverse();
+  }
+  input.addEventListener('input', () => { selected.clear(); input.value.trim() ? renderForward(input.value) : renderReverse(); });
+  initQualityFilters(); initGrid(); renderReverse();
 </script>
 
 
